@@ -2,10 +2,14 @@ using FilmesAPI.Data;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+// Configuração do MAPPER    
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 // Add services to the container.
-builder.Services.AddDbContext<FilmeContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("ConexaoPadrao")));
+builder.Services.AddDbContext<AppDbContext>(options =>
+        options.UseLazyLoadingProxies().UseSqlServer(builder.Configuration.GetConnectionString("ConexaoPadrao")));
+    //options.UseSqlServer(builder.Configuration.GetConnectionString("ConexaoPadrao")));
+
 
 
 builder.Services.AddControllers();
